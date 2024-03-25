@@ -57,7 +57,7 @@ function getDayName(date) {
   const value = event.toLocaleDateString('en', options);
   return value;
 }
-getDayName('01 Jan 1970 00:00:00 UTC');
+
 /**
  * Returns the date of the next Friday from a given date.
  *
@@ -69,10 +69,13 @@ getDayName('01 Jan 1970 00:00:00 UTC');
  * Date('2024-02-13T00:00:00Z') => Date('2024-02-16T00:00:00Z')
  * Date('2024-02-16T00:00:00Z') => Date('2024-02-23T00:00:00Z')
  */
-function getNextFriday(/* date */) {
-  throw new Error('Not implemented');
+function getNextFriday(date) {
+  const currentDay = date.getDay();
+  const daysUntilFriday = (5 - currentDay + 7) % 7 || 7;
+  const nextFriday = new Date(date);
+  nextFriday.setDate(date.getDate() + daysUntilFriday);
+  return nextFriday;
 }
-
 /**
  * Returns the number of days in a specified month and year.
  *
@@ -198,8 +201,27 @@ function getNextFridayThe13th(/* date */) {
  * Date(2024, 5, 1) => 2
  * Date(2024, 10, 10) => 4
  */
-function getQuarter(/* date */) {
-  throw new Error('Not implemented');
+function getQuarter(date) {
+  const month = new Date(date).getMonth() + 1;
+  let quarter;
+  switch (true) {
+    case month <= 3:
+      quarter = 1;
+      break;
+    case month <= 6:
+      quarter = 2;
+      break;
+    case month <= 9:
+      quarter = 3;
+      break;
+    case month > 9:
+      quarter = 4;
+      break;
+    default:
+      quarter = 4;
+  }
+
+  return quarter;
 }
 
 /**
@@ -236,8 +258,12 @@ function getWorkSchedule(/* period, countWorkDays, countOffDays */) {
  * Date(2022, 2, 1) => false
  * Date(2020, 2, 1) => true
  */
-function isLeapYear(/* date */) {
-  throw new Error('Not implemented');
+function isLeapYear(date) {
+  const year = new Date(date).getFullYear();
+  if (year % 4 === 0 || year % 400 === 0) {
+    return true;
+  }
+  return false;
 }
 
 module.exports = {
