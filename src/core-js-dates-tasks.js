@@ -138,10 +138,21 @@ function isDateInPeriod(/* date, period */) {
  * '1999-01-05T02:20:00.000Z' => '1/5/1999, 2:20:00 AM'
  * '2010-12-15T22:59:00.000Z' => '12/15/2010, 10:59:00 PM'
  */
-function formatDate(/* date */) {
-  throw new Error('Not implemented');
+function formatDate(date) {
+  const event = new Date(date);
+  const options = {
+    timeZone: 'UTC',
+    month: 'numeric',
+    day: 'numeric',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: true,
+  };
+  const value = event.toLocaleString('en-US', options);
+  return value;
 }
-
 /**
  * Returns the total number of weekend days (Saturdays and Sundays) in a specified month and year.
  *
